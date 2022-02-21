@@ -13,13 +13,25 @@ public class Team {
     private long id;
     private String Name;
 
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", Name='" + Name + '\'' +
+                ", totalMatches=" + totalMatches +
+                ", totalWins=" + totalWins +
+                '}';
+    }
+
+    private long totalMatches;
+    private long totalWins;
+
+
     public Team(String name, long totalMatches) {
         Name = name;
         this.totalMatches = totalMatches;
     }
 
-    private long totalMatches;
-    private long totalWins;
 
     public long getId() {
         return id;

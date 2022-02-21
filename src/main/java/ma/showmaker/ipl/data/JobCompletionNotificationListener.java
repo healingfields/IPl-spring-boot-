@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
     }
 
     @Override
+    @Transactional
     public void afterJob(JobExecution jobExecution) {
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("!!! JOB FINISHED! Time to verify the results");
@@ -41,8 +43,23 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
                     .map(e-> new Team((String) e[0], (long) e[1]))
                     .forEach(team -> teamData.put(team.getName(), team)
                     );
+            em.createQuery("select m.team2, count(*) from Match m group by m.team2", Object[].class)
+                    .getResultList()
+                    .stream()
+                    .forEach(e->{
+                        Team team = teamData.get((String) e[0]);
+                        team.setTotalMatches(team.getTotalMatches()+ (long)e[1]);
+                    });
+            em.createQuery("select m.winner, count(*) from Match m group by m.winner", Object[].class)
+                    .getResultList()
+                    .stream()
+                    .forEach(e->{
+                        Team team = teamData.get((String) e[0]);
+                        if(team!=null)team.setTotalWins((long)e[1]);
+                    });
+            teamData.values().forEach(team->em.persist(team));
+            teamData.values().forEach(team-> System.out.println(team.toString()));
 
-            teamData.forEach((key,value) -> System.out.println(key + " = " + value));
 
         }
     }
