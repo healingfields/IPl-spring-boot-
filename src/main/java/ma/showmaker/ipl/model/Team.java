@@ -1,9 +1,7 @@
 package ma.showmaker.ipl.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Team {
@@ -11,27 +9,29 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String Name;
-
-    @Override
-    public String toString() {
-        return "Team{" +
-                "id=" + id +
-                ", Name='" + Name + '\'' +
-                ", totalMatches=" + totalMatches +
-                ", totalWins=" + totalWins +
-                '}';
-    }
-
+    private String name;
     private long totalMatches;
     private long totalWins;
 
-
-    public Team(String name, long totalMatches) {
-        Name = name;
-        this.totalMatches = totalMatches;
+    @Transient
+    public List<Match> getMatches() {
+        return matches;
     }
 
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
+    }
+
+    @Transient
+    private List<Match> matches;
+
+    public Team() {
+
+    }
+    public Team(String name, long totalMatches) {
+        this.name = name;
+        this.totalMatches = totalMatches;
+    }
 
     public long getId() {
         return id;
@@ -42,11 +42,11 @@ public class Team {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public long getTotalMatches() {
@@ -64,5 +64,16 @@ public class Team {
     public void setTotalWins(long totalWins) {
         this.totalWins = totalWins;
     }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", Name='" + name + '\'' +
+                ", totalMatches=" + totalMatches +
+                ", totalWins=" + totalWins +
+                '}';
+    }
+
 }
 

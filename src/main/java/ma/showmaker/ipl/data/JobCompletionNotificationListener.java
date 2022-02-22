@@ -57,7 +57,9 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
                         Team team = teamData.get((String) e[0]);
                         if(team!=null)team.setTotalWins((long)e[1]);
                     });
+
             teamData.values().forEach(team->em.persist(team));
+            /*em.createQuery("select * from Team").getResultList().stream().forEach(t-> System.out.println(t.toString()));*/
             teamData.values().forEach(team-> System.out.println(team.toString()));
 
 
