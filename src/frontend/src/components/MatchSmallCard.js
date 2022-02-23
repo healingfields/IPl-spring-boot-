@@ -1,7 +1,9 @@
-const MatchSmallCard = () => {
+const MatchSmallCard = ({ match }) => {
   return (
     <div>
-      <h4>match details Small card</h4>
+      <p>
+        {match.team1} vs {match.team2}
+      </p>
     </div>
   );
 };
