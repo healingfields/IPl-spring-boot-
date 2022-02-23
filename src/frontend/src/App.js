@@ -1,9 +1,10 @@
 import "./App.css";
+import TeamPage from "./pages/TeamPage";
 
 function App() {
   return (
     <div className="App">
-      <h1>ipl</h1>
+      <TeamPage />
     </div>
   );
 }
