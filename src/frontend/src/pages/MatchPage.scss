@@ -1,0 +1,10 @@
+.MatchPage {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: 1fr;
+  margin-top: 3%;
+  column-gap: 8%;
+  .year {
+    justify-self: end;
+  }
+}
