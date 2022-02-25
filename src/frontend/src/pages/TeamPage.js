@@ -2,6 +2,7 @@ import MatchSmallCard from "../components/MatchSmallCard";
 import MatchDetails from "../components/MatchDetails";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import "./TeamPage.scss";
 import { PieChart } from "react-minimal-pie-chart";
@@ -44,7 +45,7 @@ const TeamPage = () => {
         <MatchSmallCard teamName={team.name} match={m} key={m.id} />
       ))}
       <div className="more-link">
-        <a>more </a>
+        <Link to={`/team/${teamName}/matches/${2020}`}>more</Link>
       </div>
     </div>
   );
